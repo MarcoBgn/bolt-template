@@ -1,0 +1,60 @@
+FORMAT: 1A
+HOST: https://api-impac-finance-bolt.maestrano.com
+
+# Impac!™ Finance Bolt
+[Impac!™](http://maestrano.github.io/impac/) is a reporting engine provided by [Maestrano](https://maestrano.com).
+The Finance Bolt is a calculation unit that computes and returns **reports** based on **accounting** data.
+
+The Bolt has its own data-model which is fed by Webhook notifications received from [Connec!™](http://maestrano.github.io/connec/).
+
+Each report can be output to one or several **layouts** (chart, table, grouped_table...). A layout will always have the same structure regardless of the requested report.
+
+### Path prefixing
+All calls must prefixed by the `/api` keyword, followed by the version number. Eg:
+```
+https://api-impac-finance-bolt.maestrano.com/api/v1/widgets
+```
+
+### Authentication
+The Bolt API is protected with Basic Authentication using a set of private keys shared with Impac!.
+
+Only the Discovery endpoints [Widgets](#widgets-index-get) and [KPIs](#kpis-index-get), returning the list of available reports, can be requested without authentication.
+
+Impac! private keys must be passed using Basic Auth:
++ username: `<Impac! API key>`
++ password: `<Impac! API secret>`
+
+These private keys can be retrieved only when the Bolt is registered on Impac!:
+```
+POST http://api-impac.maestrano.com/api/v2/bolts
+```
+
+See http://maestrano.github.io/impac/#bolts for more information.
+
+### What's a widget?
+A widget is the result of a calculation based on the data of one or several companies (Profit and Loss, Balance Sheet, etc.).
+
+It will return this information in a format adapted to reporting, using layouts.
+
+#### What's a layout?
+A layout is a unique data structure that defines how a widget will return the result of its calculation.
+
+It is designed to be directly usable by a reporting front-end or a charting library with minimum transformation.
+
+### What's a KPI?
+As a widget, a KPI uses the Bolt's data model to calculate a given figure (Debtor days, Year to date revenue...).
+
+In addition, a KPI will compare the calculated result with "targets" defined by the user. When a target is reached, the user will be alerted.
+
+### What's a notification?
+
+The notification api is used to interact with the Bolt's data-model: Impac! uses this endpoint to create or update the Bolt's data (Invoices, Accounts...).
+
+<!-- Widgets documentation -->
+<!-- include(widgets/index.apib) -->
+
+<!-- KPIs documentation -->
+<!-- include(kpis/index.apib) -->
+
+<!-- Notifications documentation -->
+<!-- include(notifications/index.apib) -->

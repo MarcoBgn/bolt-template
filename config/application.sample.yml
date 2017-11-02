@@ -1,0 +1,49 @@
+# MNO Suite components paths
+# --------------------------------
+CONNEC_PROTOCOL: https
+CONNEC_HOST: changeme
+CONNEC_PATHS_REPORTS: 'api/reports/:org_uid/:report_name'
+
+MNOHUB_PROTOCOL: https
+MNOHUB_HOST: changeme
+MNOHUB_PATHS_KPIS: '/api/mnoe/v1/organizations/:organization_id/kpis'
+MNOHUB_PATHS_ALERTS: '/api/mnoe/v1/alert/:alert_id'
+
+# MNO Suite components credentials
+# --------------------------------
+ROOT_KEY: changeme
+ROOT_SECRET: changeme
+
+IMPAC_KEY: changeme
+IMPAC_SECRET: changeme
+
+# Third Party components credentials
+# --------------------------------
+PUSHER_APP_ID: changeme
+PUSHER_KEY: changeme
+PUSHER_SECRET: changeme
+
+SPARKPOST_API_KEY: changeme
+
+OPENEXCHANGERATES_APP_ID: changeme
+
+newrelic_license_key: changeme
+newrelic_app_name: bolt-maestrano-changeme
+
+# MySQL DB
+# --------------------------------
+DATABASE_ADAPTER: mysql2
+DATABASE_TIMEOUT: '10000'
+DATABASE_URL: lmi-bolt-maestrano-io
+DATABASE_PORT: '3306'
+DATABASE_POOL_SIZE: '20'
+
+# Redis Caching
+# --------------------------------
+REDIS_URL: redis://localhost:6379/1/bolt-maestrano-changeme
+
+# Bolt configuration
+# --------------------------------
+# KPIs will be computed [60] seconds after the last notification is received.
+# Should be greater or equal than the Webhook period in Connec!
+KPIS_BATCH_PERIOD: '60'

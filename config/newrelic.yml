@@ -1,0 +1,59 @@
+#
+# This file configures the New Relic Agent.  New Relic monitors Ruby, Java,
+# .NET, PHP, Python and Node applications with deep visibility and low
+# overhead.  For more information, visit www.newrelic.com.
+#
+# Generated May 24, 2017, for version 4.1.0.333
+#
+# For full documentation of agent configuration options, please refer to
+# https://docs.newrelic.com/docs/agents/ruby-agent/installation-configuration/ruby-agent-configuration
+
+common: &default_settings
+  license_key: <%= ENV['newrelic_license_key'] %>
+  app_name: <%= ENV['newrelic_app_name'] %>
+
+  # Logging level for log/newrelic_agent.log
+  log_level: info
+  developer_mode: false
+
+  browser_monitoring:
+    auto_instrument: false
+
+  audit_log:
+    enabled: false
+
+  capture_params: false
+
+  transaction_tracer:
+    enabled: true
+    transaction_threshold: apdex_f
+    record_sql: obfuscated
+    stack_trace_threshold: 0.500
+
+  error_collector:
+    enabled: true
+    ignore_errors: "ActionController::RoutingError,Sinatra::NotFound"
+
+  # Ignore ping logging
+  rules:
+    ignore_url_regexes: ["^/ping", "^/version", "^/changelog/"]
+
+
+# Environment-specific settings are in this section.
+# RAILS_ENV or RACK_ENV (as appropriate) is used to determine the environment.
+# If your application has other named environments, configure them here.
+development:
+  <<: *default_settings
+  monitor_mode: false
+  developer_mode: true
+
+test:
+  <<: *default_settings
+  # It doesn't make sense to report to New Relic from automated test runs.
+  monitor_mode: false
+
+uat:
+  <<: *default_settings
+
+production:
+  <<: *default_settings

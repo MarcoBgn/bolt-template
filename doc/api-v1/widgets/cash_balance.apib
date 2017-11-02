@@ -1,0 +1,153 @@
+## Cash Balance [/api/v1/widgets/cash_balance]
+
+### Cash Balance [GET]
+
+Calculates your past and projected cash over a given time period.
+
+Returns each Bank account with its balance evolution.
+
+```
+current cash = [total of all the journals emitted on Bank accounts]
+projected cash = [current cash] + [receivables at date] - [payables at date]
+```
+
+**Supported layouts**
+- chart
+- grouped_table
+
+**Parameters**
+| Name | Example | Type | Optional / Required | Description | Default value
+| ---- | ------- | ---- | ------------------- | ----------- | -------------
+| layouts | `['chart']` | array[string] | optional | Layouts used to format the widget's response | All supported layouts
+| metadata[organization_ids] | `['org-fbxi']` | array[string] | required | Unique ids of the companies for which the widget will be calculated |
+| metadata[currency] | `'AUD'` | string | required | Currency in which the result will be displayed |
+| metadata[hist_parameters][from] | `'2017-01-01'` | string | optional | Time period start | Beginning of calendar year
+| metadata[hist_parameters][to] | `'2017-05-15'` | string | optional | Time period end | Date at which the widget is requested
+| metadata[hist_parameters][period] | `'MONTHLY'` | string | optional | Time period interval | `'MONTHLY'`
+
++ Request
+  + Headers
+    Authorization: Basic ZmFkNTRzNmY2YTRzZGY2YWRzZzQ2YWRmNTQ4Z2RmZzpnNTRkZnNn=
+
++ Response (application/json)
+  + Body
+
+    ```JSON
+      {
+        "cash_balance": {
+          "chart": {
+            "labels": [
+              "2017-01-31",
+              "2017-02-28",
+              "2017-03-31",
+              "2017-04-30",
+              "2017-05-15"
+            ],
+            "series": [
+              {
+                "id": "36a19ac0-2183-0135-408e-7caa147a84c2",
+                "data": [
+                  0,
+                  1911.979965209961,
+                  1766.1299715042114,
+                  -649.1498489379883,
+                  -951.5798225402832
+                ],
+                "name": "Business Bank Account",
+                "bias": "positive",
+                "marker": {
+                  "symbol": "circle"
+                }
+              },
+              {
+                "id": "36aa8d70-2183-0135-4092-7caa147a84c2",
+                "data": [
+                  0,
+                  15081.23046875,
+                  15081.23046875,
+                  15081.23046875,
+                  11581.23046875
+                ],
+                "name": "Business Savings Account",
+                "bias": "positive",
+                "marker": {
+                  "symbol": "circle"
+                }
+              },
+              {
+                "id": "projected",
+                "name": "Projected cash",
+                "data": [
+                  0,
+                  16993.21,
+                  16847.36,
+                  14432.08,
+                  10629.65
+                ],
+                "type": "area",
+                "color": "rgb(168, 208, 218)",
+                "marker": {
+                  "enabled": false
+                },
+                "zoneAxis": "x",
+                "zones": [
+                  {
+                    "value": null,
+                    "fillColor": "rgba(168, 208, 218, 0.5)"
+                  },
+                  {
+                    "dashStyle": "ShortDot",
+                    "fillColor": "rgba(168, 208, 218, 0.2)"
+                  }
+                ]
+              }
+            ]
+          },
+          "grouped_table": {
+            "headers": [
+              "CASHONHAND",
+              "Combined"
+            ],
+            "groups": [
+              [
+                {
+                  "id": "36a19ac0-2183-0135-408e-7caa147a84c2",
+                  "name": "Business Bank Account",
+                  "company_name": "Demo Company (AU)"
+                },
+                {
+                  "id": "36aa8d70-2183-0135-4092-7caa147a84c2",
+                  "name": "Business Savings Account",
+                  "company_name": "Demo Company (AU)"
+                }
+              ],
+              [
+                {
+                  "id": "projected",
+                  "name": "Projected cash"
+                }
+              ]
+            ]
+          }
+        },
+        "params": {
+          "endpoint": "cash_balance",
+          "layouts": [
+            "chart",
+            "grouped_table"
+          ],
+          "metadata": {
+            "currency": "AUD",
+            "hist_parameters": {
+              "from": "2017-01-01",
+              "to": "2017-05-15",
+              "period": "MONTHLY"
+            },
+            "organization_ids": [
+              "org-fbxi"
+            ]
+          }
+        }
+      }
+    ```
+

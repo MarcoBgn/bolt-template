@@ -1,0 +1,151 @@
+## Cash Projection [/api/v1/widgets/cash_projection]
+
+### Cash Projection [GET]
+
+Calculates your past and projected cash over a given time period.
+
+Returns the total cash, payables and receivables.
+
+```
+current cash = [total of all the journals emitted on Bank accounts]
+projected cash = [current cash] + [receivables at date] - [payables at date]
+```
+
+It is also possible to offset the calculation of the projected cash:
+- By offseting the current cash
+- By offseting each future interval
+
+```ruby
+# Offsets the current cash by $150.0
+metadata[:offset][:current] = [100.0, 50.0]
+# Offsets the current cash and each future interval by -$200.0
+metadata[:offset][:per_interval] = [-200.0]
+```
+
+**Supported layouts**
+- chart
+
+**Parameters**
+| Name | Example | Type | Optional / Required | Description | Default value
+| ---- | ------- | ---- | ------------------- | ----------- | -------------
+| layouts | `['chart']` | array[string] | optional | Layouts used to format the widget's response | All supported layouts
+| metadata[organization_ids] | `['org-fbxi']` | array[string] | required | Unique ids of the companies for which the widget will be calculated |
+| metadata[currency] | `'AUD'` | string | required | Currency in which the result will be displayed |
+| metadata[hist_parameters][from] | `'2017-01-01'` | string | optional | Time period start | Beginning of calendar year
+| metadata[hist_parameters][to] | `'2017-05-15'` | string | optional | Time period end | Date at which the widget is requested 
+| metadata[hist_parameters][period] | `'MONTHLY'` | string | optional | Time period interval | `'MONTHLY'`
+| metadata[offset][current] | `[100.0, 50.0]` | array[float] | optional | Offsets the cash at current interval | `[]`
+| metadata[offset][per_interval] | `[-200.0]` | array[float] | optional | Offsets the cash at current interval and each future intervals | `[]`
+
++ Request
+  + Headers
+    Authorization: Basic ZmFkNTRzNmY2YTRzZGY2YWRzZzQ2YWRmNTQ4Z2RmZzpnNTRkZnNn=
+
++ Response (application/json)
+  + Body
+
+    ```JSON
+      {
+        "cash_projection": {
+          "chart": {
+            "labels": [
+              "2017-01-31",
+              "2017-02-28",
+              "2017-03-31",
+              "2017-04-30",
+              "2017-05-15"
+            ],
+            "series": [
+              {
+                "name": "Projected cash",
+                "data": [
+                  0,
+                  16993.21,
+                  16847.36,
+                  14432.08,
+                  10629.65
+                ],
+                "type": "area",
+                "marker": {
+                  "enabled": false
+                },
+                "color": "rgb(168, 208, 218)",
+                "zoneAxis": "x",
+                "zones": [
+                  {
+                    "value": null,
+                    "fillColor": "rgba(168, 208, 218, 0.5)"
+                  },
+                  {
+                    "dashStyle": "ShortDot",
+                    "fillColor": "rgba(168, 208, 218, 0.2)"
+                  }
+                ]
+              },
+              {
+                "name": "Cash flow",
+                "data": [
+                  0,
+                  16993.21,
+                  -145.85,
+                  -2415.28,
+                  -3802.43
+                ],
+                "type": "column"
+              },
+              {
+                "name": "Payables",
+                "data": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "type": "column",
+                "color": "#d16378"
+              },
+              {
+                "name": "Receivables",
+                "data": [
+                  0,
+                  0,
+                  0,
+                  0,
+                  0
+                ],
+                "type": "column",
+                "color": "#89a876"
+              }
+            ]
+          }
+        },
+        "params": {
+          "endpoint": "cash_projection",
+          "layouts": [
+            "chart"
+          ],
+          "metadata": {
+            "currency": "AUD",
+            "hist_parameters": {
+              "from": "2017-01-01",
+              "to": "2017-05-15",
+              "period": "MONTHLY"
+            },
+            "organization_ids": [
+              "org-fbxi"
+            ],
+            "offset": {
+              "current": [
+                "100.0",
+                "50.0"
+              ],
+              "per_interval": [
+                "-200.0"
+              ]
+            }
+          }
+        }
+      }
+    ```
+

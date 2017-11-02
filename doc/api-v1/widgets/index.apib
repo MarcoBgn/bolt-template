@@ -1,0 +1,32 @@
+# Group Widgets
+
+## Index [/api/v1/widgets]
+
+### Index [GET]
+Returns the list of all available widgets with their supported layouts.
+
++ Response (application/json)
+  + Body
+
+    ```JSON
+      {
+        "widgets": [
+          {
+            "endpoint": "cash_balance",
+            "name": "Cash Balance",
+            "width": 12,
+            "layouts": ["chart", "grouped_table"]
+          },
+          {
+            "endpoint": "cash_projection",
+            "name": "Cash Projection",
+            "width": 12,
+            "layouts": ["chart"]
+          }
+        ]
+      }
+    ```
+
+<!-- include(cash_balance.apib) -->
+<!-- include(cash_projection.apib) -->
+

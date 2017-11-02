@@ -1,0 +1,31 @@
+# Group KPIs
+
+## Index [/api/v1/kpis]
+
+### Index [GET]
+Returns the list of all available KPIs.
+
+The **watchables** correspond to the list of metrics that can be targeted to determine whether the KPI is triggered or not.
+
+The **attachables** correspond to the list of widgets each KPI can be attached to.
+
+
++ Response (application/json)
+  + Body
+
+    ```JSON
+      {
+        "kpis": [
+          {
+            "name": "CashProjection",
+            "endpoint": "kpis/cash_projection",
+            "watchables": [
+              "threshold"
+            ],
+            "attachables": [
+              "cash_projection"
+            ]
+          }
+        ]
+      }
+    ```

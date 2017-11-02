@@ -1,0 +1,6 @@
+---
+:queues:
+  - default
+  - kpis
+  - entities
+:concurrency: <%= ENV['SIDEKIQ_MAX_WORKERS'] || 50 %>

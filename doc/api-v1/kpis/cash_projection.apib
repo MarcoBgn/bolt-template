@@ -1,0 +1,33 @@
+## Cash Projection [/api/v1/kpis/cash_projection]
+
+### Cash Projection [GET]
+
+**threshold**
+Uses the Cash Projection widget to calculated your projected cash.
+
+The KPI will then verify whether your projected cash goes below a specified threshold.
+
+**Note**: Only the future cash (>= today) will be taken into account for the comparison with the target.
+
+
+**Parameters**
+| Name | Example | Type | Optional / Required | Description | Default value
+| ---- | ------- | ---- | ------------------- | ----------- | -------------
+| settings[organization_ids] | `['org-fbxi']` | array[string] | required | Unique ids of the companies for which the KPI will be calculated |
+| settings[currency] | `'AUD'` | string | required | Currency in which the result will be displayed |
+| settings[hist_parameters][from] | `'2017-01-01'` | string | optional | Time period start | Beginning of calendar year
+| settings[hist_parameters][to] | `'2017-05-15'` | string | optional | Time period end | Date at which the widget is requested 
+| settings[hist_parameters][period] | `'MONTHLY'` | string | optional | Time period interval | `'MONTHLY'`
+| targets[thresholds] | `[{ min: 500.0 }]` | array(hash) | required | Targets to compare the cash with |
+
++ Request
+  + Headers
+    Authorization: Basic ZmFkNTRzNmY2YTRzZGY2YWRzZzQ2YWRmNTQ4Z2RmZzpnNTRkZnNn=
+
++ Response (application/json)
+  + Body
+
+    ```JSON
+      
+    ```
+

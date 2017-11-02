@@ -1,0 +1,74 @@
+# Group Notifications Webhook
+
+## Create [/api/v1/notifications]
+
+### Create [POST]
+The Bolt exposes a Webhook to be notified of data changes in real-time. The standard integration receives updates from Applications integrated with Impac! and Connec!.
+
+Integration with any data source can be done by sending data to this endpoint
+
+Upon receiving data on this endpoint, the Bolt aggregates financial transactions and journals entries to generate up to date reports.
+
+> We call "entity" each data type stored in Connec! which relates to a company. Eg: an invoice or an employee are entities.
+> See http://maestrano.github.io/connec/ for more information about entities.
+
+The list of entities that the Finance Bolt processes are
+- [company](https://maestrano.github.io/connec/#company)
+- [accounts](https://maestrano.github.io/connec/#accounts)
+- [invoices](https://maestrano.github.io/connec/#invoices): will create invoices when `type = 'CUSTOMER'` and bills when `type = 'SUPPLIER'`
+- [journals](https://maestrano.github.io/connec/#journals): won't directly create a Journal, but generate an aggregate instead
+
++ Request (application/json)
+  + Headers
+    Authorization: Basic ZmFkNTRzNmY2YTRzZGY2YWRzZzQ2YWRmNTQ4Z2RmZzpnNTRkZnNn=
+
+  + Body
+
+    ```JSON
+      {
+        // Company unique id as saved in Connec!
+        "channel_id": "org-abcd",
+        // New or modified entities
+        "entities": {
+          "invoices": [
+            {
+              "id": "0g5e9655-3245-0134-e575-05d5581ffb37",
+              "balance": 1500.0
+            }
+          ],
+          "journals": [
+            {
+              "id": "0e8e7480-5237-0134-e575-05d7781eeb37",
+              "transaction_reference_id": "0g5e9655-3245-0134-e575-05d5581ffb37"
+            }
+          ]
+        }
+      }
+    ```
+
++ Response (application/json)
+  + Body
+
+    ```JSON
+      {
+        // Returns the entities saved in the Bolt's data-model
+        "entities": {
+          "invoices": [
+            {
+              "id": "0g5e9655-3245-0134-e575-05d5581ffb37",
+              "balance": 1500.0
+            }
+          ],
+          "totals_per_account": [
+            {
+              "account_id": "328a104c-eb10-40a6-83d1-0d991164d90f",
+              "total": 1500.0
+            },
+            {
+              "account_id": "3a2e6cb8-7127-474d-a7ab-62a4203b47f2",
+              "total": -1500.0
+            }
+          ]
+        }
+      }
+    ```

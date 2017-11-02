@@ -1,0 +1,78 @@
+# require: rubocop-rspec
+# inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: 2.3
+  DisplayCopNames: true
+  DisplayStyleGuide: true
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/migrate/*'
+    - 'bin/**/*'
+    - 'lib/tasks/*'
+
+Rails:
+  Enabled: true
+
+# Warnings at application launch (Rails.logger not defined yet)
+Rails/Output:
+  Exclude:
+    - 'config/application.rb'
+    - 'config/initializers/*.rb'
+
+Lint/EndAlignment:
+  AlignWith: variable
+
+Lint/RescueException:
+  Exclude: 
+    - 'config/application.rb'
+
+Performance/RedundantMerge:
+  MaxKeyValuePairs: 1
+
+Style/RegexpLiteral:
+  EnforcedStyle: mixed
+  AllowInnerSlashes: true
+
+Style/Documentation:
+  Exclude:
+    - 'config/application.rb'
+    - 'app/models/application_record.rb'
+    
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Exclude:
+    - config/application.rb
+
+Style/SignalException:
+  Exclude:
+    - 'lib/strategies/*.rb'
+    
+Metrics/LineLength:
+  Max: 120
+  Exclude:
+    - 'Gemfile'
+
+Metrics/MethodLength:
+  Max: 25
+  Exclude: 
+    - 'app/models/concerns/**/*.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'app/models/concerns/**/*.rb'
+
+Metrics/AbcSize:
+  Max: 50
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+Metrics/ParameterLists:
+  Max: 5
+  Exclude:
+    - 'spec/support/helpers/entity_creator.rb'

@@ -1,0 +1,9 @@
+#!/bin/bash
+# -
+# Nex! deploy hook
+# Use env-based settings
+# -
+
+# Database.yml
+rm -f ./config/database.yml
+cp -p ./config/database.env.yml ./config/database.yml
